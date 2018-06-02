@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.exam.dao.CourseDao">
+    <select id="getCourse" parameterType="int" resultType="com.exam.bean.Course">
+        SELECT
+        *
+        FROM
+          `course` c
+        WHERE
+          courseId= #{courseId}
+    </select>
+
+    <insert id="insertCourse" parameterType="com.exam.bean.Course" useGeneratedKeys="true" keyProperty="courseId">
+        insert into course(name,profile) values(#{name},#{profile})
+    </insert>
+
+
+    <select id="getAllCourses" resultType="com.exam.bean.Course">
+        SELECT
+        *
+        FROM
+        `course` c
+    </select>
+</mapper>

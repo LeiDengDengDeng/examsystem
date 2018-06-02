@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.exam.dao.PaperDao">
+    <select id="getPaperByExamIdAndStudentId" parameterType="java.lang.String" resultType="com.exam.bean.Paper">
+        SELECT
+          *
+        FROM
+          paper
+        WHERE
+          examId = #{examId} AND studentId = #{studentId}
+    </select>
+
+    <select id="getPaperByCode" parameterType="java.lang.String" resultType="com.exam.bean.Paper">
+        SELECT
+          *
+        FROM
+          paper
+        WHERE
+          code = #{code}
+    </select>
+
+    <select id="getPaperById" parameterType="java.lang.Integer" resultType="com.exam.bean.Paper">
+        SELECT
+          *
+        FROM
+          paper
+        WHERE
+          id = #{id}
+    </select>
+
+    <select id="getCheckablePaperIds" resultType="Integer">
+        SELECT
+          p.id
+        FROM
+          paper p
+        LEFT JOIN
+          exam e ON p.examId = e.id
+        WHERE
+          checked = FALSE
+        AND (handed = TRUE OR NOW() > e.endTime)
+    </select>
+
+    <update id="updatePaper" parameterType="com.exam.bean.Paper">
+        UPDATE paper
+        SET
+          score = #{paper.score},
+          handed = #{paper.handed},
+          `generated` = #{paper.generated},
+          checked = #{paper.checked}
+        WHERE id = #{paper.id};
+    </update>
+    <insert id="addPaper" parameterType="com.exam.bean.Paper">
+        INSERT INTO
+        paper
+        VALUES
+        (#{paper.id},#{paper.examId},#{paper.score},
+         #{paper.studentId},#{paper.code},#{paper.handed},
+         #{paper.generated},#{paper.checked}
+         )
+    </insert>
+
+    <insert id="addPaperQuestion" parameterType="com.exam.bean.PaperQuestion" useGeneratedKeys="true" keyProperty="paperQuestion.id">
+        INSERT INTO
+          paper_question(paperId,questionId)
+        VALUES
+          (#{paperQuestion.paperId},#{paperQuestion.questionId})
+    </insert>
+
+    <select id="getPaperQuestion" parameterType="java.lang.Integer" resultType="com.exam.bean.PaperQuestion">
+        SELECT
+          paperId,questionId,marked,scored
+        FROM
+          paper_question
+        WHERE
+          paperId = #{paperId} and questionId = #{questionId}
+    </select>
+
+    <select id="getPaperQuestions" parameterType="java.lang.Integer" resultType="com.exam.bean.PaperQuestion">
+        SELECT
+          paperId,questionId,marked,scored
+        FROM
+          paper_question
+        WHERE
+          paperId = #{paperId}
+        ORDER BY id
+    </select>
+
+    <insert id="addPaperOption" parameterType="com.exam.bean.PaperOption" useGeneratedKeys="true" keyProperty="paperOption.id">
+        INSERT INTO
+          paper_option(paperId,optionId,questionId,selected)
+        VALUES
+          (#{paperOption.paperId},#{paperOption.optionId},#{paperOption.questionId},#{paperOption.selected})
+    </insert>
+
+    <select id="getPaperOption" parameterType="java.lang.Integer" resultType="com.exam.bean.PaperOption">
+        SELECT
+          paperId,optionId,questionId,selected
+        FROM
+          paper_option
+        WHERE
+          paperId = #{paperId} AND optionId = #{optionId}
+    </select>
+
+    <select id="getPaperOptions" parameterType="java.lang.Integer" resultType="com.exam.bean.PaperOption">
+        SELECT
+          paperId,optionId,questionId,selected
+        FROM
+          paper_option
+        WHERE
+          paperId = #{paperId} AND questionId = #{questionId}
+        ORDER BY id
+    </select>
+
+    <select id="getPapersByExamId" parameterType="java.lang.String" resultType="com.exam.bean.Paper">
+        SELECT
+          *
+        FROM
+          paper
+        WHERE
+          examId = #{examId}
+    </select>
+
+    <select id="getScoresByExamId" parameterType="java.lang.String" resultType="com.exam.bean.Score">
+        SELECT
+        examId,score,studentId
+        FROM
+        paper
+        WHERE
+        examId = #{examId} AND checked=1
+    </select>
+
+    <update id="updatePaperQuestion" parameterType="com.exam.bean.PaperQuestion">
+        UPDATE paper_question
+        SET
+          scored = #{paperQuestion.scored},
+          marked = #{paperQuestion.marked}
+        WHERE questionId = #{paperQuestion.questionId} AND paperId = #{paperQuestion.paperId};
+    </update>
+
+    <update id="updatePaperOption" parameterType="com.exam.bean.PaperOption">
+        UPDATE paper_option
+        SET
+          selected = #{paperOption.selected}
+        WHERE optionId = #{paperOption.optionId} AND paperId = #{paperOption.paperId};
+    </update>
+</mapper>

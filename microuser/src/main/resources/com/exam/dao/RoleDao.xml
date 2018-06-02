@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.exam.dao.RoleDao">
+    <select id="getRole" parameterType="int" resultType="com.exam.bean.Role">
+        SELECT
+        *
+        FROM
+        `role` r
+        WHERE
+        roleId= #{roleId}
+    </select>
+
+   
+
+    <insert id="insertRole" parameterType="com.exam.bean.Role" keyProperty="roleId">
+        insert into role(roleId,role) values(#{roleId} #{role})
+    </insert>
+</mapper>

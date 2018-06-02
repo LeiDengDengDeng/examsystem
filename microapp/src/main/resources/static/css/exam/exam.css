@@ -1,0 +1,90 @@
+.question hr {
+    height: 1px;
+    border: none;
+    border-top: 1px dashed #b4b4b4;
+    margin-top: 10px;
+}
+
+.question .score {
+    width: 75px;
+    padding-right: 0px;
+    color: #b4b4b4;
+}
+
+.question .title {
+    padding-left: 0px;
+    color: #000000;
+}
+
+.question input[type=checkbox] {
+    margin-left: 20px;
+}
+
+.question .option p {
+    color: #000000;
+    font-weight: 300;
+    padding-left: 5px;
+}
+
+.checkbox { display: none; }
+.trigger {
+    cursor: pointer;
+    position: relative;
+    float: left;
+    width: 30px; height: 20px;
+    background: #ffffff;
+    overflow: hidden;
+    -webkit-transition: background .15s linear;
+}
+.checkbox:checked + .trigger { background: #00C5FF; }
+.trigger:before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; bottom: 0;
+    width: 10px; height: 10px;
+    margin: auto 5px;
+    box-shadow: 0 0 0 100px hsla(0, 0%, 0%, .3);
+    -webkit-transition: left .15s linear;
+}
+.checkbox:checked + .trigger:before { left: 10px; }
+
+.vertical-center{
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+    height: 700px;
+}
+
+.exam-notice{
+    background-color: #e4e4e4;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.exam-notice .title{
+    text-align: center;
+    padding-top: 20px;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.exam-notice .content{
+    padding-bottom: 20px;
+    width: 600px;
+}
+
+.num-btn {
+    margin-top: 2px;
+    margin-bottom: 2px;
+    width: 30px;
+    height: 30px;
+    border-radius: 15px;
+    background-color: white;
+}
+
+.blue {
+    background-color: #cef6f4
+}

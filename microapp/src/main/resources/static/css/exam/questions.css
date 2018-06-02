@@ -1,0 +1,28 @@
+.square {
+    background-color: white;
+    height: 45px;
+    border-radius: 15px;
+    padding-left: 0px;
+    padding-right: 0px;
+}
+
+.download{
+    padding-left: 18px;
+    padding-top: 10px;
+    width: 125px;
+}
+
+.square .title{
+    padding-left: 0px;
+    background-color: #3091B2; !important;
+    height: 45px;
+    border-radius: 15px;
+    text-align: center;
+}
+
+.square .title label{
+    color: white;
+    font-weight: normal;
+    margin-top: 12px;
+    margin-left: 15px;
+}

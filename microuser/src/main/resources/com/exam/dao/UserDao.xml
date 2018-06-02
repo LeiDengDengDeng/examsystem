@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.exam.dao.UserDao">
+    <select id="getUser" parameterType="java.lang.String" resultType="com.exam.bean.User">
+        SELECT
+         *
+        FROM
+          `user` u
+        WHERE
+          email= #{email}
+    </select>
+
+    <insert id="insertUser" parameterType="com.exam.bean.User" keyProperty="email">
+        insert into user(email,name,code,roleId,password) values(#{email},#{name},#{code},#{roleId},#{password})
+    </insert>
+
+    <select id="getUserByGroup" resultType="com.exam.bean.User">
+        SELECT
+        u.email,u.code,u.name,u.password,u.roleId
+        FROM
+        `user` u LEFT JOIN
+        `user_group` g
+        ON u.email=g.email
+        WHERE g.groupId= #{groupId}
+    </select>
+    <insert id="insertUserTOGroup" keyProperty="email">
+        insert into user_group(groupId,email) values(#{groupId},#{email})
+    </insert>
+    <select id="getAllStudents" resultType="com.exam.bean.User">
+        SELECT
+        *
+        FROM
+        `user` u
+        WHERE
+        u.roleId= 1
+    </select>
+
+    <delete id="dropStudentFromGroup" >
+        delete
+        from
+        `user_group`
+        where groupId=#{groupId} and email=#{email}
+    </delete>
+
+    <delete id="dropAllStudentsFromGroup" >
+        delete
+        from
+        `user_group`
+        where groupId=#{groupId}
+    </delete>
+</mapper>
